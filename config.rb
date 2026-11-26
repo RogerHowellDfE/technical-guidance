@@ -5,5 +5,6 @@ GovukTechDocs.configure(self)
 set :layout, 'custom'
 
 configure :build do
-    activate :asset_hash
+    # Sharing metadata uses an absolute URL with this fixed filename.
+    activate :asset_hash, ignore: ['images/opengraph-image.png']
 end

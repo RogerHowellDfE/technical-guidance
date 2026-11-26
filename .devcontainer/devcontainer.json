@@ -1,0 +1,31 @@
+{
+  "name": "DfE Technical Guidance",
+  // Pinned by digest for reproducibility. Tag: 3.4-bookworm.
+  // Ruby version: keep the 3.4 major.minor in sync with .ruby-version and .tool-versions.
+  // - The tag tracks 3.4 only, so the patch level may differ from those files.
+  // To update: look up the new digest for the tag and change it here.
+  "image": "mcr.microsoft.com/devcontainers/ruby:3.4-bookworm@sha256:3ca4423a30082d61e5021b8b3cc16c1351074a6430310d398c98583425a510ff",
+  "remoteUser": "vscode",
+  // The tech docs gem on this Ruby needs a JavaScript runtime at build time (ExecJS).
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "24"
+    }
+  },
+  "forwardPorts": [4567],
+  "portsAttributes": {
+    "4567": {
+      "label": "Middleman preview",
+      "onAutoForward": "notify"
+    }
+  },
+  "postCreateCommand": "bundle install",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "Shopify.ruby-lsp",
+        "DavidAnson.vscode-markdownlint"
+      ]
+    }
+  }
+}

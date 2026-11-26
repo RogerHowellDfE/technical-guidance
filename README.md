@@ -9,6 +9,30 @@ It's built using the GOV.UK [tech-docs-template](https://github.com/alphagov/tec
 ## Add a new guidance
 See the [Adding a new guidance][/guides/adding-new-guidance] section.
 
+## Run the site locally
+
+The repository includes a [dev container](https://containers.dev/) so you do
+not need to install Ruby locally. You need Docker and either VS Code with the
+Dev Containers extension or GitHub Codespaces.
+
+1. Open the repository and choose "Reopen in Container". Gems install
+   automatically on first start.
+2. In the container terminal, run `bundle exec middleman server --bind-address=0.0.0.0`.
+3. Open <http://localhost:4567>.
+
+To check a production build and its links, run `make check-links`.
+
+Without the dev container, use the Ruby version in `.ruby-version` and a
+supported Node.js LTS release, then run `bundle install`. Node.js provides
+the JavaScript runtime needed to build the site's assets.
+
+## Site assets
+
+The favicons are vendored unchanged from the
+[DfE design repository](https://github.com/DFE-Digital/design/tree/b1fe52b1ed4c0663c5cb48a5cc6e87524432ef75/app/public/images).
+Their reuse does not require enabling `show_govuk_logo`; the site retains its
+text-only header.
+
 ## Licence
 
 The documentation is [© Crown copyright][copyright] and available under the terms of the [Open Government 3.0][ogl] licence.
