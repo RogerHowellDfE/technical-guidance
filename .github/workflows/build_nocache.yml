@@ -14,13 +14,13 @@ jobs:
       docker-image-tag: ${{ steps.build-image.outputs.tag }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         name: Checkout
 
       - name: Setup ruby
         uses: ruby/setup-ruby@v1
+        # Ruby version is read from .ruby-version.
         with:
-          ruby-version: 3.4
           bundler-cache: true
 
       - name: Build docs with middleman

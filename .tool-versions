@@ -1,2 +1,6 @@
-ruby 3.4.10
+# Ruby version: keep in sync with .ruby-version (update both).
+# - Use the full patch version, e.g. 3.4.13.
+# - .ruby-version cannot hold comments, so the note lives here.
+# - Dev container image tracks 3.4 only.
+ruby 3.4.13
 terraform 1.14.5
