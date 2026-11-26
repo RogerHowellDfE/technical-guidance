@@ -1,0 +1,61 @@
+name: Fork GitHub Pages preview
+
+# Fork-only preview of the built site; the upstream repository publishes through
+# the AKS workflow instead.
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+      - ci/fork-github-pages-preview
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    if: github.repository != 'DFE-Digital/technical-guidance'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup ruby
+        uses: ruby/setup-ruby@v1
+        # Ruby version is read from .ruby-version.
+        with:
+          bundler-cache: true
+
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      # Project Pages are served below /<repository>, so links need that prefix.
+      - name: Set site path prefix
+        run: echo "set :http_prefix, '${{ steps.pages.outputs.base_path }}'" >> config.rb
+
+      - name: Build docs with middleman
+        run: make build
+
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
